@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 # Create your views here.
 from .models import Product
@@ -18,16 +20,24 @@ def checkout(request):
 def productPage(request, slug):
     product = Product.objects.get(slug=slug)
     context = {'product': product}
-    print(product.price)
     return render(request, 'core/product-page.html', context)
 
 
 def cartPage(request):
-    product = Product.objects.all()
-    profile = Profile.objects.get(user=request.user)
-    for i in profile.cartItem.all():
-        print(i.name)
-    print(request.user)
+    # print(request.user.is_authenticated)
+    if request.user.is_authenticated:
 
-    context = {'product': product}
-    return render(request, 'core/cartPage.html', context)
+        profile = Profile.objects.get(user=request.user)
+        context = {'cartitems': profile.cartItem.all()}
+        return render(request, 'core/cartPage.html', context)
+    else:
+        messages.info(request, 'You are not logged in')
+        return render(request, 'core/cartPage.html')
+
+
+def addtocart(request, slug):
+    item = Product.objects.get(slug=slug)
+    profile = Profile.objects.get(user=request.user)
+    profile.cartItem.add(item)
+    messages.info(request, 'item added to carts')
+    return redirect('productPage', slug=slug)

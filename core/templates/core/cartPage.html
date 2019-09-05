@@ -1,8 +1,8 @@
-{% extends 'core/base.html' %}
-{% block content %}
+{% extends 'core/base.html' %} {% block content %}
 
+{% if user.is_authenticated %}
 <div class="table-responsive">
-  <table class="table"> 
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -12,14 +12,59 @@
       </tr>
     </thead>
     <tbody>
+      {% for item in cartitems %}
       <tr>
-        <th scope="row">1</th>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ item.name }}</td>
+        <td data-count="1" id="counter_{{ forloop.counter }}">
+          <button
+            onclick="minus({{ forloop.counter }})"
+            id="minusButton"
+            data-count="1"
+            class="btn btn-default btn-xs"
+          >
+            <i class="fas fa-minus mr-2"></i>
+          </button>
+          1
+          <button
+            onclick="plus({{ forloop.counter }})"
+            id="plusButton"
+            data-count="1"
+            class="btn btn-default btn-xs"
+          >
+            <i class="fas fa-plus ml-2"></i>
+          </button>
+        </td>
+        <td>{{ item.price }}</td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
+{% else %}
+<div class="col-md-4 text-center">
+<a href="{% url 'account_login' %}"><button type="button" class="btn btn-primary ">  Login  </button></a>  
+</div>
+<div class="col-md-4 text-center">
+<a href="{% url 'account_signup' %}"><button type="button" class="btn btn-primary ">  Register  </button></a>  
+</div>
+{% endif %}
+<script>
 
-{% endblock  %}
+  function plus(item_id) {
+    var td = document.getElementById("counter_" + item_id);
+    var counter = td.getAttribute("data-count");
+    counter++;
+    td.childNodes[2].nodeValue = counter;
+    td.setAttribute("data-count", counter);
+  }
+
+  function minus(item_id) {
+    var td = document.getElementById("counter_" + item_id);
+    var counter = td.getAttribute("data-count");
+    counter--;
+    td.childNodes[2].nodeValue = counter;
+    td.setAttribute("data-count", counter);
+  }
+</script>
+{% endblock %}

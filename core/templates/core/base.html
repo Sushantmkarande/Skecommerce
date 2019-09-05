@@ -52,9 +52,16 @@
 body { 
     padding-top: 65px; 
 }
+  q
+btn-group-xs > .btn, .btn-xs {
+  padding: .25rem .4rem;
+  font-size: .875rem;
+  line-height: .5;
+  border-radius: .2rem;
+}
 </style>
 
-  <body>
+<body>
 
     <!-- Navbar -->
     <nav
@@ -161,6 +168,18 @@ body {
     </nav>
     <!-- Navbar -->
 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+
+
     {% block content %}
     {% endblock %}
 
@@ -238,7 +257,7 @@ body {
     new WOW().init();
 
 
-  </body>
+</body>
 
 
 </html>

@@ -1,8 +1,9 @@
 {% extends 'core/base.html' %} {% block content %}
-
 {% if user.is_authenticated %}
+{% load static %}
+
 <div class="table-responsive">
-  <table class="table">
+  <table id="table" class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -12,59 +13,107 @@
       </tr>
     </thead>
     <tbody>
+
       {% for item in cartitems %}
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ item.name }}</td>
-        <td data-count="1" id="counter_{{ forloop.counter }}">
-          <button
-            onclick="minus({{ forloop.counter }})"
-            id="minusButton"
-            data-count="1"
-            class="btn btn-default btn-xs"
-          >
-            <i class="fas fa-minus mr-2"></i>
-          </button>
-          1
-          <button
-            onclick="plus({{ forloop.counter }})"
-            id="plusButton"
-            data-count="1"
-            class="btn btn-default btn-xs"
-          >
-            <i class="fas fa-plus ml-2"></i>
-          </button>
-        </td>
-        <td>{{ item.price }}</td>
-      </tr>
+      <form method="POST" id="my_form{{ forloop.counter }}" action="{% url 'cart' %}">
+        {% csrf_token %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td><input type="hidden" name="product" id="{{item.id}}" value="{{item.name}}">{{ item.name }}</td>
+          <td data-count="1" id="counter_{{ forloop.counter }}">
+            <button onclick="minus({{ forloop.counter }})" id="minusButton" data-count="1"
+              class="btn btn-default btn-xs">
+              <i class="fas fa-minus mr-2"></i>
+            </button>
+            1
+            <button onclick="plus({{ forloop.counter }})" id="plusButton" data-count="1" class="btn btn-default btn-xs">
+              <i class="fas fa-plus ml-2"></i>
+            </button>
+          </td>
+          <td data-price="{{ item.price }}" id="counter_{{ forloop.counter }}">
+            {{ item.price }}
+          </td>
+          <td><a href="{% url 'removeFromCart' slug=item.slug %}"><i
+                class="fas fa-times"></i></a></i></td>
+        </tr>
+      </form>
       {% endfor %}
     </tbody>
+    <tfoot>
+      <tr>
+        <td>Total Price</td>
+        <td></td>
+        <td></td>
+        <td id='totalPrice'></td>
+      </tr>
+    </tfoot>
   </table>
 </div>
 {% else %}
 <div class="col-md-4 text-center">
-<a href="{% url 'account_login' %}"><button type="button" class="btn btn-primary ">  Login  </button></a>  
+  <a href="{% url 'account_login' %}"><button type="button" class="btn btn-primary ">Login</button></a>
 </div>
 <div class="col-md-4 text-center">
-<a href="{% url 'account_signup' %}"><button type="button" class="btn btn-primary ">  Register  </button></a>  
+  <a href="{% url 'account_signup' %}"><button type="button" class="btn btn-primary ">Register</button></a>
 </div>
 {% endif %}
+
+<div>
+  <button type="submit" class="btn btn-default btn-lg">Proceed To Checkout</button>
+</div>
+<script src="{% static 'js/TableToJson.min.js' %}"></script>
+
 <script>
+  pricePlace = document.getElementById('totalPrice')
+  table = document.getElementById('table')
+
+  total()
 
   function plus(item_id) {
-    var td = document.getElementById("counter_" + item_id);
-    var counter = td.getAttribute("data-count");
+    var td = document.querySelectorAll("#counter_" + item_id);
+    var counter = td[0].getAttribute("data-count");
+    var price = td[1].getAttribute("data-price");
     counter++;
-    td.childNodes[2].nodeValue = counter;
-    td.setAttribute("data-count", counter);
+    td[0].childNodes[2].nodeValue = counter;
+    td[0].setAttribute("data-count", counter);
+    price = price * counter;
+    td[0].setAttribute("data-price", price);
+    td[1].innerHTML = price;
+    total()
   }
 
   function minus(item_id) {
-    var td = document.getElementById("counter_" + item_id);
-    var counter = td.getAttribute("data-count");
+    var td = document.querySelectorAll("#counter_" + item_id);
+    var counter = td[0].getAttribute("data-count");
+    var price = td[1].getAttribute("data-price");
     counter--;
-    td.childNodes[2].nodeValue = counter;
-    td.setAttribute("data-count", counter);
+    td[0].childNodes[2].nodeValue = counter;
+    td[0].setAttribute("data-count", counter);
+    price = price * counter;
+    td[0].setAttribute("data-price", price);
+    td[1].innerHTML = price;
+    total()
   }
+
+  function total() {
+    var sum = 0
+    for (let i = 0; i < table.tBodies[0].rows.length; i++) {
+      console.log(table.tBodies[0].rows[i].cells[3].innerHTML);
+      sum += parseFloat(table.tBodies[0].rows[i].cells[3].innerHTML)
+      pricePlace.innerHTML = sum
+    }
+  }
+
+  // function tableInJson(table) {
+  //   for (let i = 0; i < table.tBodies[0].rows.length; i++) {
+  //     var data = {}
+  //     console.log(table.tBodies[0].rows[0].cells[1])
+  //   }
+  // }
+
+  // var table = document.querySelectorAll('#table')
+  // tableInJson(table)
+
 </script>
+
 {% endblock %}

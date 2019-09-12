@@ -1,0 +1,27 @@
+<input type="number" name="{{ widget.name }}" class="form-control
+quantity-number" value="{{ widget.value }}" min="1" max="10" {% include "django/forms/widgets/attrs.html" %} />
+<button type="button" onclick="clickminus()" class="btn-number-minus" data-types="minus" data-field="{{ widget.name }}">
+  -
+</button>
+<button type="button" onclick="clickplus()" class="btn-number-plus" data-type="plus" data-field="{{ widget.name }}">
+  +
+</button>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+
+<script>
+  var input = document.querySelector('.form-control')
+
+  var counter = 1
+  function clickminus() {
+    counter--;
+    input.value = counter
+  }
+
+
+
+  function clickplus() {
+    counter++;
+    input.value = counter
+  }
+</script>

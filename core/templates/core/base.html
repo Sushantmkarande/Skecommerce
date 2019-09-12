@@ -3,6 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+      
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -48,21 +49,24 @@
     </style>
   </head>
 
-<style>
-body { 
-    padding-top: 65px; 
-}
-  q
-btn-group-xs > .btn, .btn-xs {
-  padding: .25rem .4rem;
-  font-size: .875rem;
-  line-height: .5;
-  border-radius: .2rem;
-}
-</style>
+  <style>
+    body {
+      padding-top: 65px;
+    }
+    btn-group-xs > .btn,
+    .btn-xs {
+      padding: 0.25rem 0.4rem;
+      font-size: 0.875rem;
+      line-height: 0.5;
+      border-radius: 0.2rem;
+    }
+  </style>
 
-<body>
-
+  <body>
+  <script
+      type="text/javascript"
+      src="{% static 'js/jquery-3.4.1.min.js' %}"
+    ></script>
     <!-- Navbar -->
     <nav
       class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"
@@ -168,96 +172,103 @@ btn-group-xs > .btn, .btn-xs {
     </nav>
     <!-- Navbar -->
 
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{ message }}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{% endfor %}
-{% endif %}
-
-
-    {% block content %}
-    {% endblock %}
-
-
-<!--Footer-->
-<footer class="page-footer text-center font-small mt-4 wow fadeIn">
-
-    <!--Call to action-->
-    <div class="pt-4">
-     
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-    <!--/.Call to action-->
+    {% endfor %} {% endif %} {% block content %} {% endblock %}
 
-    <hr class="my-4">
+    <!--Footer-->
+    <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+      <!--Call to action-->
+      <div class="pt-4"></div>
+      <!--/.Call to action-->
 
-    <!-- Social icons -->
-    <div class="pb-4">
-      <a href="https://www.facebook.com/mdbootstrap" target="_blank">
-        <i class="fab fa-facebook-f mr-3"></i>
-      </a>
+      <hr class="my-4" />
 
-      <a href="https://twitter.com/MDBootstrap" target="_blank">
-        <i class="fab fa-twitter mr-3"></i>
-      </a>
+      <!-- Social icons -->
+      <div class="pb-4">
+        <a href="https://www.facebook.com/mdbootstrap" target="_blank">
+          <i class="fab fa-facebook-f mr-3"></i>
+        </a>
 
-      <a href="https://www.youtube.com/watch?v=7MUISDJ5ZZ4" target="_blank">
-        <i class="fab fa-youtube mr-3"></i>
-      </a>
+        <a href="https://twitter.com/MDBootstrap" target="_blank">
+          <i class="fab fa-twitter mr-3"></i>
+        </a>
 
-      <a href="https://plus.google.com/u/0/b/107863090883699620484" target="_blank">
-        <i class="fab fa-google-plus-g mr-3"></i>
-      </a>
+        <a href="https://www.youtube.com/watch?v=7MUISDJ5ZZ4" target="_blank">
+          <i class="fab fa-youtube mr-3"></i>
+        </a>
 
-      <a href="https://dribbble.com/mdbootstrap" target="_blank">
-        <i class="fab fa-dribbble mr-3"></i>
-      </a>
+        <a
+          href="https://plus.google.com/u/0/b/107863090883699620484"
+          target="_blank"
+        >
+          <i class="fab fa-google-plus-g mr-3"></i>
+        </a>
 
-      <a href="https://pinterest.com/mdbootstrap" target="_blank">
-        <i class="fab fa-pinterest mr-3"></i>
-      </a>
+        <a href="https://dribbble.com/mdbootstrap" target="_blank">
+          <i class="fab fa-dribbble mr-3"></i>
+        </a>
 
-      <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank">
-        <i class="fab fa-github mr-3"></i>
-      </a>
+        <a href="https://pinterest.com/mdbootstrap" target="_blank">
+          <i class="fab fa-pinterest mr-3"></i>
+        </a>
 
-      <a href="http://codepen.io/mdbootstrap/" target="_blank">
-        <i class="fab fa-codepen mr-3"></i>
-      </a>
-    </div>
-    <!-- Social icons -->
+        <a
+          href="https://github.com/mdbootstrap/bootstrap-material-design"
+          target="_blank"
+        >
+          <i class="fab fa-github mr-3"></i>
+        </a>
 
-    <!--Copyright-->
-    <div class="footer-copyright py-3">
-      © 2019 Copyright:
-      <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> MDBootstrap.com </a>
-    </div>
-    <!--/.Copyright-->
+        <a href="http://codepen.io/mdbootstrap/" target="_blank">
+          <i class="fab fa-codepen mr-3"></i>
+        </a>
+      </div>
+      <!-- Social icons -->
 
-  </footer>
-  <!--/.Footer-->
+      <!--Copyright-->
+      <div class="footer-copyright py-3">
+        © 2019 Copyright:
+        <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank">
+          MDBootstrap.com
+        </a>
+      </div>
+      <!--/.Copyright-->
+    </footer>
+    <!--/.Footer-->
 
-
-  <!-- SCRIPTS -->
-  <!-- JQuery -->
-  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
-  <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="{% static 'js/popper.min.js'%}"></script>
-  <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%}"></script>
-  <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="{% static 'js/mdb.min.js'%}"></script>
-  <!-- Initializations -->
-  <script type="text/javascript">
-    // Animations initialization
-    new WOW().init();
-
-
-</body>
-
-
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script
+      type="text/javascript"
+      src="{% static 'js/jquery-3.4.1.min.js' %}"
+    ></script>
+    <!-- Bootstrap tooltips -->
+    <script
+      type="text/javascript"
+      src="{% static 'js/popper.min.js' %}"
+    ></script>
+    <!-- Bootstrap core JavaScript -->
+    <script
+      type="text/javascript"
+      src="{% static 'js/bootstrap.min.js' %}"
+    ></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+    <!-- Initializations -->
+    <script type="text/javascript">
+      // Animations initialization
+      new WOW().init();
+    </script>
+  </body>
 </html>

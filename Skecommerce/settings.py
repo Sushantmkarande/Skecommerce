@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'django.contrib.sites', 
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -87,4 +87,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
-    
+
+
+LOGIN_REDIRECT_URL = 'cart'
